@@ -28,3 +28,5 @@ go get github.com/alexedwards/scs/v2
 go get github.com/jackc/pgx/v4
 
 go get -u github.com/ory/dockertest/v3
+
+go test -v -tags=integration

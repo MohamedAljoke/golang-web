@@ -1,3 +1,5 @@
+//go:build integration
+
 package dbrepo
 
 import (
@@ -203,5 +205,51 @@ func TestPostgresDBRepoUpdateUser(t *testing.T) {
 }
 
 func TestPostgresDBRepoDeleteUser(t *testing.T) {
+	err := testRepo.DeleteUser(2)
 
+	if err != nil {
+		t.Errorf("error deleting user id 2: %s", err)
+	}
+	_, err = testRepo.GetUser(2)
+	if err == nil {
+		t.Errorf("retrieved user id 2, who should have been deleted")
+	}
+}
+
+func TestPostgresDBRepoResetPassowrd(t *testing.T) {
+	err := testRepo.ResetPassword(1, "password")
+	if err != nil {
+		t.Error("error resetting users password", err)
+	}
+	user, _ := testRepo.GetUser(1)
+
+	matches, err := user.PasswordMatches("password")
+
+	if err != nil {
+		t.Error(err)
+	}
+	if !matches {
+		t.Errorf("password should match 'password' but does not")
+	}
+}
+
+func TestPostgresDBRepoInsertUserImage(t *testing.T) {
+	var image data.UserImage
+	image.UserID = 1
+	image.FileName = "test.jpg"
+	image.CreatedAt = time.Now()
+	image.UpdatedAt = time.Now()
+
+	newID, err := testRepo.InsertUserImage(image)
+	if err != nil {
+		t.Error("inserting user image failed:", err)
+	}
+	if newID != 1 {
+		t.Error("got wrong id for image; should be 1, but got", newID)
+	}
+	image.UserID = 100
+	_, err = testRepo.InsertUserImage(image)
+	if err == nil {
+		t.Error("inserted a user of a non-existing user id, but did not get an error")
+	}
 }
