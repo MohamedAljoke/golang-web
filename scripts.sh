@@ -21,4 +21,8 @@ go test -run function_name
 go test -coverprofile=coverage.out ./...
 go tool cover -html=coverage.out
 
-go get github.com/alexedwards/scs/v2
+# for sessions
+go get github.com/alexedwards/scs/v2  
+
+
+go get github.com/jackc/pgx/v4

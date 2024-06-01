@@ -16,6 +16,7 @@ func Test_app_routes(t *testing.T) {
 		{"/", "GET"},
 		{"/static/*", "GET"},
 		{"/login", "POST"},
+		{"/user/profile", "GET"},
 	}
 	mux := app.routes()
 	chiRoutes := mux.(chi.Routes)
