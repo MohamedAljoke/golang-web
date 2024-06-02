@@ -284,7 +284,6 @@ func Test_app_UploadPic(t *testing.T) {
 
 	req = addContextAndSessionToRequest(req, app)
 	app.Session.Put(req.Context(), "user", data.User{ID: 1})
-	app.Session.Put(req.Context(), "user", data.User{ID: 1})
 
 	req.Header.Add("Content-Type", mw.FormDataContentType())
 
