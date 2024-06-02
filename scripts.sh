@@ -30,3 +30,5 @@ go get github.com/jackc/pgx/v4
 go get -u github.com/ory/dockertest/v3
 
 go test -v -tags=integration
+
+go get github.com/golang-jwt/jwt/v4
